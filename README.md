@@ -398,45 +398,83 @@ The Vigenere cipher is a method of encrypting alphabetic text by using a series 
 
 
 ## PROGRAM:
-PROGRAM:
-#include<stdio.h> #include<string.h>
-//FunctiontoperformVigenereencryption voidvigenereEncrypt(char*text,constchar*key){ inttextLen= strlen(text);
-intkeyLen=strlen(key); for(inti =0;i< textLen;i++){ charc =text[i]; if(c>='A'&&c<='Z'){
-//Encryptuppercaseletters
-text[i]=((c-'A'+key[i%keyLen]-'A')%26)+'A';
-}else if(c>='a'&&c<='z'){
-//Encryptlowercaseletters
-text[i]=((c-'a'+key[i%keyLen]-'A')%26)+'a';
-}
-}
-}
-//FunctiontoperformVigeneredecryption voidvigenereDecrypt(char*text,constchar*key){ inttextLen= strlen(text);
-intkeyLen=strlen(key);
+```
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
 
-for(inti =0;i< textLen;i++){ charc =text[i]; if(c>='A'&&c<='Z'){
-//Decryptuppercaseletters
- 
-text[i]=((c-'A'-(key[i% keyLen]-'A') +26) %26)+ 'A';
-}else if(c>='a'&&c<='z'){
-//Decryptlowercaseletters
-text[i]=((c-'a'-(key[i% keyLen]-'A') +26) %26)+ 'a';
-}
-}
-}
-intmain(){
-constchar *key="KEY";//Replacewithyourdesired key
-char message[]= "Thisisasecretmessage.";//Replace withyourmessage
-//Encrypt themessage vigenereEncrypt(message,key); printf("EncryptedMessage:%s\n",message);
-//Decrypt themessage backtotheoriginal vigenereDecrypt(message,key); printf("DecryptedMessage:%s\n",message); Return 0;
+void encrypt() {
+char plaintext[128];
+char key[16];
+printf("\nEnter the plaintext (up to 128 characters): ");
+scanf(" %[^\n]", plaintext); // Read input with spaces
+printf("Enter the key (up to 16 characters): ");
+scanf(" %[^\n]", key);
 
+printf("Cipher Text: ");  
+for (int i = 0, j = 0; i < strlen(plaintext); i++, j++) {  
+    if (j >= strlen(key)) {  
+        j = 0;  
+    }  
+    int shift = toupper(key[j]) - 'A';  
+    char encryptedChar = ((toupper(plaintext[i]) - 'A' + shift) % 26) + 'A';  
+    printf("%c", encryptedChar);  
+}  
+printf("\n");  
+}
+
+void decrypt() {
+char ciphertext[128];
+char key[16];
+printf("\nEnter the ciphertext: ");
+scanf(" %[^\n]", ciphertext);
+printf("Enter the key: ");
+scanf(" %[^\n]", key);
+
+printf("Deciphered Text: ");  
+for (int i = 0, j = 0; i < strlen(ciphertext); i++, j++) {  
+    if (j >= strlen(key)) {  
+        j = 0;  
+    }  
+    int shift = toupper(key[j]) - 'A';  
+    char decryptedChar = ((toupper(ciphertext[i]) - 'A' - shift + 26) % 26) + 'A';  
+    printf("%c", decryptedChar);  
+}  
+printf("\n");  
+}
+
+int main() {
+int option;
+while (1) {
+printf("\n1. Encrypt");
+printf("\n2. Decrypt");
+printf("\n3. Exit\n");
+printf("\nEnter your option: ");
+scanf("%d", &option);
+
+    switch (option) {  
+        case 1:  
+            encrypt();  
+            break;  
+        case 2:  
+            decrypt();  
+            break;  
+        case 3:  
+            exit(0);  
+        default:  
+            printf("\nInvalid selection! Try again.\n");  
+            break;  
+    }  
+}  
+return 0;  
+}
+```
 ## OUTPUT:
-OUTPUT :
 
-Simulating Vigenere Cipher
+![WhatsApp Image 2024-09-02 at 08 31 53_0775df7e](https://github.com/user-attachments/assets/dfe71635-c817-4026-9d8d-bf82686ed2e1)
 
 
-Input Message : SecurityLaboratory
-Encrypted Message : NMIYEMKCNIQVVROWXC Decrypted Message : SECURITYLABORATORY
 ## RESULT:
 The program is executed successfully
 
